@@ -403,35 +403,35 @@ resource "aws_iam_role_policy" "allow_s3_all" {
 }
 EOF
 
-  }
+}
 
-  resource "aws_s3_bucket" "web_bucket" {
-    bucket        = local.s3_bucket_name
-    acl           = "private"
-    force_destroy = true
+resource "aws_s3_bucket" "web_bucket" {
+  bucket        = local.s3_bucket_name
+  acl           = "private"
+  force_destroy = true
 
-    tags = merge(local.common_tags, { Name = "${var.environment_tag}-web-bucket" })
+  tags = merge(local.common_tags, { Name = "${var.environment_tag}-web-bucket" })
 
-  }
+}
 
-  resource "aws_s3_bucket_object" "website" {
-    bucket = aws_s3_bucket.web_bucket.bucket
-    key = "/website/index.html"
-    source = "./index.html"
+resource "aws_s3_bucket_object" "website" {
+  bucket = aws_s3_bucket.web_bucket.bucket
+  key = "/website/index.html"
+  source = "./index.html"
 
-  }
+}
 
-  resource "aws_s3_bucket_object" "graphic" {
-    bucket = aws_s3_bucket.web_bucket.bucket
-    key = "/website/Globo_logo_Vert.png"
-    source = "./Globo_logo_Vert.png"
+resource "aws_s3_bucket_object" "graphic" {
+  bucket = aws_s3_bucket.web_bucket.bucket
+  key = "/website/Globo_logo_Vert.png"
+  source = "./Globo_logo_Vert.png"
 
-  }
+}
 
-  ##################################################################################
-  # OUTPUT
-  ##################################################################################
+##################################################################################
+# OUTPUT
+##################################################################################
 
-  output "aws_elb_public_dns" {
-    value = aws_elb.web.dns_name
-  }
+output "aws_elb_public_dns" {
+  value = aws_elb.web.dns_name
+}
